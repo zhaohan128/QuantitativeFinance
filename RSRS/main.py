@@ -296,7 +296,7 @@ def cal_right_stdbeta(df, n, m):
 
     :return df1 DataFrame 新增策略净值'net_asset_value'
     """
-    df1 = cal_better_stdbeta(df, n, m)
+    df1 = cal_better_stdbeta(df, n)
     df1['position'] = 0
     df1['flag'] = 0
     df1['net_value'] = 0
@@ -493,17 +493,13 @@ def visualize_performance_2(mkt_data,mkt_data_std):
 #导入数据
 df = pd.read_csv('data/000300.csv', encoding='utf-8')
 mkt_data = cal_nbeta(df,18) #斜率策略
-mkt_data_std = cal_stdbeta(df,180, 60) #标准分策略
+mkt_data_std = cal_stdbeta(df,18, 60) #标准分策略
 
 #斜率策略——可视化及回测结果打印
-result_daily_300, performance_df = statistic_performance(mkt_data)
-visualize_performance(result_daily_300)
-print(performance_df)
+print(calculate_statistics(mkt_data))
 
 #标准分策略——可视化及回测结果打印
-result_daily_300_std, performance_df_std = statistic_performance(mkt_data_std)
-visualize_performance(result_daily_300_std)
-print(performance_df_std)
+print(calculate_statistics(mkt_data_std))
 
 #斜率策略&标准分策略对比
 visualize_performance_2(mkt_data,mkt_data_std)
@@ -516,7 +512,7 @@ data = cal_better_stdbeta(df, 16)
 print(calculate_statistics(data))
 
 # 右偏标准分 此时N取16
-data = cal_right_stdbeta(df, 16)
+data = cal_right_stdbeta(df, 16, 20)
 print(calculate_statistics(data))
 
 #RSRS指标配合价格数据优化策略
